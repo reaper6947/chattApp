@@ -22,7 +22,7 @@ socket.on("chat_message", function(msg) {
 // append text if someone is online
 socket.on("is_online", function(username) {
     let child = document.createElement("li");
-    child.classList.add("mx-auto");
+    child.classList.add("mx-auto","joined-cl");
     child.innerHTML = username;
     messagesEl.appendChild(child);
 });

@@ -16,14 +16,14 @@ io.sockets.on("connection", function(socket) {
         socket.username = username;
         io.emit(
             "is_online",
-            "🔵 <i>" + socket.username + " joined the chat..</i>"
+            " <i>" + socket.username + " joined the chat..</i>"
         );
     });
 
     socket.on("disconnect", function(username) {
         io.emit(
             "is_online",
-            "🔴 <i>" + socket.username + " left the chat..</i>"
+            " <i>" + socket.username + " left the chat..</i>"
         );
     });
 

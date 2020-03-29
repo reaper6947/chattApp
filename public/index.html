@@ -7,52 +7,63 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <style>
-     
-    #main-div{
+    #main-div {
       min-height: 100% !important;
-      background-color: #d4ebd0  !important;
-    
+      background-color: #242526 !important;
+      
+
     }
-    #txt{
+   li,#txt{
+     color:aliceblue !important;
+     background-color: #3A3B3C !important;
+   }
+   #messages i{
+     background-color:#242526!important;;
+   }
+    .joined-cl {
+      background-color: #242526 !important;
+    }
+
+    #txt {
       border: 0;
-      background-color: #a4c5c6 !important;
-      line-height:normal;
-      padding-left:"3px" !important;
+      background-color: #3A3B3C !important;
+      line-height: 100%;
+      padding-left: 4px !important;
     }
-    *{
-      border-radius:3px;
+
+    * {
+      border-radius: 3px;
     }
-    .inv{
+
+    .inv {
       visibility: hidden;
     }
-    body{
-      background-color: #d4ebd0 !important;
+
+    body {
+      background-color: #242526 !important;
     }
-    
   </style>
   <script defer src="../../socket.io/socket.io.js"></script>
 </head>
 
 <body class="main-body">
   <div class="container-fluid main-div mx-0 bg-light " id="main-div">
-    <div class="">
-      <ul id="messages" class="list-group"></ul>
-      <li class="list-group-item inv">
-      </li>
-      <li class="list-group-item inv">
-      </li>
-    </div>
-    
-    <form action="/" method="POST" id="chatForm" >
-      <div class="d-flex d-flex fixed-bottom mx-2 mb-1">
-       <input id="txt" autocomplete="off" autofocus="on" class=" mx-1  flex-fill" placeholder="type your message here..." />
-       <button class="btn btn-info  flex my-1 btn "><i class="fa fa-paper-plane"></i></button>
-      </div>  
-    </form>
-  
 
+    <ul id="messages" class="list-group"></ul>
+    <li class="list-group-item inv">
+    </li>
+    <li class="list-group-item inv py-2">
+    </li>
+    <div class="d-flex fixed-bottom mx-3 mb-1">
+      <form action="/" method="POST" id="chatForm" class="d-flex flex-fill">
+        <input id="txt" autocomplete="off" autofocus="on" class="flex-fill py-2"
+          placeholder="type your message here..." />
+        <button class="btn btn-info   my-0  "><i class="fa fa-paper-plane"></i></button>
+      </form>
+    </div>
   </div>
   <script>
     /*
