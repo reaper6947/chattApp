@@ -1,0 +1,19 @@
+{
+  "name": "node-simple-group-chat",
+  "version": "1.0.0",
+  "description": "A simple group chat built using Node.js and Socket.io",
+  "main": "index.js",
+  "scripts": {
+    "start": " node index.js /public/chat.js /public/index.html",
+    "devStart": "nodemon --watch index.js /public/chat.js /public/index.html"
+  },
+  "author": "reaper6947",
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.16.4",
+    "socket.io": "2.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  }
+}
