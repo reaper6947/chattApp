@@ -31,7 +31,7 @@ io.sockets.on("connection", function(socket) {
     socket.on("chat_message", function(message) {
         io.emit(
             "chat_message",
-            "<strong>" + socket.username + "</strong>: " + message
+            "<b>" + socket.username + "</b>: " + message
         );
     });
 });
