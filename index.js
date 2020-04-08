@@ -26,7 +26,9 @@ io.sockets.on("connection", function(socket) {
             " <i>" + socket.username + " left the chat..</i>"
         );
     });
-
+    socket.on('typing', function(data){
+        io.emit('typing', data);
+     });
 
     socket.on("chat_message", function(message) {
         io.emit(
