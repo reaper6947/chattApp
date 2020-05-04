@@ -62,12 +62,4 @@ socket.on("is_online", function (username) {
 // ask username
 var userPrompt = prompt("Please tell me your name");
 let username = userPrompt.trim();
-/*
-if (username == "" || username == null || username == undefined || username == "undefined") {
-    let mat = Math.floor(Math.random() * 10) + 1;
-    let str = Math.random().toString(36).substr(2, 3)
-  var username = `user-${mat}${str}`;
-}
-*/
-
 socket.emit("username", username);

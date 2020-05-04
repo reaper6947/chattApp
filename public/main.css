@@ -1,0 +1,81 @@
+#main-div {
+  min-height: 100% !important;
+  background-color: #242526 !important;
+}
+
+#main-head-li {
+  background-color: #3a3b3c !important;
+  color: aliceblue;
+  border-radius: 0.1em 0.1em 0.7em 0.7em !important;
+  list-style-type: none;
+}
+
+#main-head-li i {
+  font-size: 0.77em !important;
+}
+
+#messages-ul li {
+  color: aliceblue !important;
+  background-color: #242526 !important;
+  border-radius: 0em;
+  border: 0 !important;
+}
+
+.message-cl {
+  padding: 0.2em !important;
+  padding-left: 0.8em !important;
+  border-radius: 0em !important;
+}
+
+#messages-ul i {
+  background-color: #242526 !important;
+}
+
+#chatForm {
+  background-color: #242526 !important;
+  border-radius: 2em !important;
+}
+
+#btn-submit {
+  outline: none !important;
+  border: 1px !important;
+  background-color: #3a3b3c !important;
+  border-radius: 0em 2em 2em 0em;
+}
+
+button:active {
+  -webkit-box-shadow: inset 1px 1px 1px #333 !important;
+  -moz-box-shadow: inset 1px 1px 1px #333 !important;
+  box-shadow: inset 1px 1px 1px #333 !important;
+}
+
+.fa {
+  padding: 0em !important;
+}
+
+.joined-cl {
+  background-color: #242526 !important;
+  list-style-type: none;
+}
+
+.joined-cl i {
+  font-size: 0.77em !important;
+}
+
+#txt {
+  border: 0;
+  background-color: #3a3b3c !important;
+  line-height: 100%;
+  padding-left: 1em !important;
+  color: aliceblue !important;
+  outline: none;
+  border-radius: 2em 0em 0em 2em;
+}
+
+.inv {
+  visibility: hidden;
+}
+
+body {
+  background-color: #242526 !important;
+}

@@ -1,176 +1,57 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name=" theme-color" content="#3A3B3C" />
-    <meta name="apple-mobile-web-app-status-bar" content="#3A3B3C" />
-    <title>Simple Group Chat on Node.js</title>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
-    <link
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      rel="stylesheet"
-      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-      crossorigin="anonymous"
-    />
-    <style>
-      #main-div {
-        min-height: 100% !important;
-        background-color: #242526 !important;
-      }
-      #main-head-li{
-        background-color:#3A3B3C !important;
-        color:aliceblue;
-        border-radius: .1em .1em 0.7em 0.7em !important ;
-        list-style-type: none;
-      }
-      #main-head-li i{
-        font-size: 0.77em !important;
-      }
-      
-      #messages-ul li {
-        color: aliceblue !important;
-        background-color: #242526 !important;
-        border-radius: 0em;
-        border: 0 !important;
-      }
-      .message-cl {
-        padding: 0.2em !important;
-        padding-left: 0.8em !important;
-        border-radius: 0em !important;
-        
-      }
-      #messages-ul i {
-        background-color: #242526 !important;
-      }
-      #chatForm{
-        background-color:#242526 !important;
-        border-radius:2em !important;
-      }
-      #btn-submit {
-        outline: none !important;
-        border: 1px !important;
-        background-color: #3A3B3C !important;
-        border-radius: 0em 2em 2em 0em;
-      }
-      button:active {
-        -webkit-box-shadow: inset 1px 1px 1px #333 !important;
-        -moz-box-shadow: inset 1px 1px 1px #333 !important;
-        box-shadow: inset 1px 1px 1px #333 !important;
-      }
 
-      .fa {
-        padding: 0em !important;
-      }
-      .joined-cl {
-        background-color: #242526 !important;
-        list-style-type: none;
-      }
-      .joined-cl i {
-        font-size: 0.77em !important;
-      }
+<head>
+  <meta name=" theme-color" content="#3A3B3C" />
+  <meta name="apple-mobile-web-app-status-bar" content="#3A3B3C" />
+  <title>Simple Group Chat on Node.js</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+  <link rel="stylesheet" type="text/css" href="main.css" />
+  <script defer src="../../socket.io/socket.io.js"></script>
+</head>
 
-      #txt {
-        border: 0;
-        background-color: #3A3B3C !important;
-        line-height: 100%;
-        padding-left: 1em !important;
-        color: aliceblue !important;
-        outline: none;
-        border-radius: 2em 0em 0em 2em;
-      }
+<body id="main-body">
 
-      .inv {
-        visibility: hidden;
-      }
 
-      body {
-        background-color: #242526 !important;
-      }
-    </style>
-    <script defer src="../../socket.io/socket.io.js"></script>
-  </head>
-
-  <body id="main-body">
-
-    
-    <div class="container-fluid  mx-0 bg-light " id="main-div">
-      <li class="mx-auto sticky-top joined-cl rounded-bottom" id="main-head-li"> <i class="ml-2" id="main-head-i"></i></li>
-      <ul id="messages-ul" class="list-group">
-      </ul>
-      <li class="list-group-item inv"></li>
-      <li class="list-group-item inv py-2 my-1"></li>
-      <div class="d-flex fixed-bottom mx-3 mb-1">
-        <form action="/" method="POST" id="chatForm" class="d-flex flex-fill">
-          <div class="input-group mb-1">
-            <input
-              type="text"
-              id="txt"
-              autocomplete="off"
-              autofocus="on"
-              class="flex-fill py-2 "
-              placeholder="type your message here..."
-            />
-            <div class="input-group-append">
-              <button
-                class="btn btn-light"
-                type="submit"
-                id="btn-submit"
-              >
-                <i class="fa fa-paper-plane "></i>
-              </button>
-            </div>
+  <div class="container-fluid  mx-0 bg-light " id="main-div">
+    <li class="mx-auto sticky-top joined-cl rounded-bottom" id="main-head-li"> <i class="ml-2" id="main-head-i"></i>
+    </li>
+    <ul id="messages-ul" class="list-group">
+    </ul>
+    <li class="list-group-item inv"></li>
+    <li class="list-group-item inv py-2 my-1"></li>
+    <div class="d-flex fixed-bottom mx-3 mb-1">
+      <form action="/" method="POST" id="chatForm" class="d-flex flex-fill">
+        <div class="input-group mb-1">
+          <input type="text" id="txt" autocomplete="off" autofocus="on" class="flex-fill py-2 "
+            placeholder="type your message here..." />
+          <div class="input-group-append">
+            <button class="btn btn-light" type="submit" id="btn-submit">
+              <i class="fa fa-paper-plane "></i>
+            </button>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
-    <script>
-      /*
-    #chatForm {
+  </div>
+  <script>
 
-  position: relative;
-  margin-left: 5%;
-  margin-right: 5%;
-  bottom: 5px;
-  background-color: white;
+  </script>
+  <script defer src="/chat.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+</body>
 
-  width: auto;
-  display: flex;
-
-
-  main-dev {
-      padding: 0;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      font: 13px Helvetica, Arial;
-      color: #222831;
-    }
-  */
-    </script>
-    <script defer src="/chat.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-      crossorigin="anonymous"
-    ></script>
-  </body>
 </html>
