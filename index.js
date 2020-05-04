@@ -12,11 +12,19 @@ app.get("/", function(req, res) {
 });
 
 io.sockets.on("connection", function(socket) {
-    socket.on("username", function(username) {
-        socket.username = username;
+    socket.on("username", function (username) {
+        if (username === "" || username === null || username === undefined || username === "undefined") {
+            let mat = Math.floor(Math.random() * 10) + 1;
+            let str = Math.random().toString(36).substr(2, 3)
+            var userId = `user-${mat}${str}`;
+            socket.username = userId;
+        } else {
+            socket.username = username;
+        }
+        
         io.emit(
             "is_online",
-            " <i>" + socket.username + " joined the chat..</i>"
+            socket.username
         );
     });
 

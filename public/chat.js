@@ -2,62 +2,72 @@ var socket = io.connect("localhost:3000");
 var formEl = document.getElementById("chatForm");
 var textInputEl = document.getElementById("txt");
 var messagesEl = document.getElementById("messages-ul");
-var typingEl = document.getElementById("main-head-i")
-formEl.addEventListener("submit", e => {
+var typingEl = document.getElementById("main-head-i");
+formEl.addEventListener("submit", (e) => {
   e.preventDefault();
   var sendMsg = textInputEl.value.trim();
   if (sendMsg != 0) {
     socket.emit("chat_message", textInputEl.value);
-    socket.emit('typing',"");
+    socket.emit("typing", "");
     textInputEl.value = "";
     return false;
   }
 });
 
 // append the chat text message
-socket.on("chat_message", function(msg) {
-    let child = document.createElement("li");
-    child.classList.add("list-group-item", "list-group-item-dark","overflow-auto","d-flex","border-0","message-cl");
-    child.innerHTML = msg;
-    messagesEl.appendChild(child);
-
+socket.on("chat_message", function (msg) {
+  let child = document.createElement("li");
+  child.classList.add(
+    "list-group-item",
+    "list-group-item-dark",
+    "overflow-auto",
+    "d-flex",
+    "border-0",
+    "message-cl"
+  );
+  child.innerHTML = msg;
+  messagesEl.appendChild(child);
 });
 // sends info about typing to server
-textInputEl.addEventListener('input', function () {
+textInputEl.addEventListener("input", function () {
   let validate = textInputEl.value.trim();
   console.log(validate);
   if (validate != "") {
     console.log(validate.length);
-      socket.emit('typing', username);
+    socket.emit("typing", username);
   } else {
-    socket.emit('typing',"");
-    }
-  });
+    socket.emit("typing", "");
+  }
+});
 //receive info about user typing
-socket.on('typing', function (data) {
+socket.on("typing", function (data) {
   if (data.length != 0 && data != username) {
     typingEl.innerText = `${data} is typing`;
-}
-  else if (data.length <= 0) {
-    typingEl.innerText = '';
-    }
+  } else if (data.length <= 0) {
+    typingEl.innerText = "";
+  }
 });
 
 // append text if someone is online
-socket.on("is_online", function(username) {
-    let child = document.createElement("li");
-    child.classList.add("mx-auto","joined-cl");
-    child.innerHTML = username;
-    messagesEl.appendChild(child);
+socket.on("is_online", function (username) {
+  let child = document.createElement("li");
+  child.classList.add("mx-auto", "joined-cl");
+  let italic = document.createElement("i");
+  italic.innerText = `${username} has joined the chat`;
+  child.appendChild(italic);
+  messagesEl.appendChild(child);
+  textInputEl.setAttribute("placeholder", `type as ${username}`);
 });
 
 // ask username
 var userPrompt = prompt("Please tell me your name");
-var username = userPrompt.trim();
+let username = userPrompt.trim();
+/*
 if (username == "" || username == null || username == undefined || username == "undefined") {
     let mat = Math.floor(Math.random() * 10) + 1;
     let str = Math.random().toString(36).substr(2, 3)
   var username = `user-${mat}${str}`;
-} 
+}
+*/
+
 socket.emit("username", username);
-textInputEl.setAttribute("placeholder",`type as ${username}`) ;
