@@ -4,10 +4,8 @@ var textInputEl = document.getElementById("txt");
 var messagesEl = document.getElementById("messages-ul");
 var typingEl = document.getElementById("main-head-i")
 
-
 //gets previous messsages from server
-  
-(function () {
+function getChats() {
   fetch("/chat")
     .then((data) => {
       return data.json();
@@ -28,8 +26,9 @@ var typingEl = document.getElementById("main-head-i")
         messagesEl.appendChild(child);
       });
     });
-})();
+};
 
+getChats();
 // sends info about typing to server
 textInputEl.addEventListener("input", function () {
   let vali = textInputEl.value.trim();
@@ -88,7 +87,7 @@ socket.on("is_online", function (username) {
   
 });
 
-// ask username
+
 const validUser = function (userInfo) {
   let userId = userInfo.trim();
   if (
@@ -105,8 +104,9 @@ const validUser = function (userInfo) {
       return userInfo;
   }
 };
-
+// ask username
 var userPrompt = prompt("Please tell me your name");
-let username = validUser(userPrompt);
+var username = validUser(userPrompt);
 textInputEl.setAttribute("placeholder", `type as ${username}`);
 socket.emit("username", username);
+

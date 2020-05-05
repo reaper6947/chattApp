@@ -50,12 +50,17 @@ io.sockets.on("connection", function (socket) {
   });
 
   socket.on("typing", function (data) {
-    console.log(data.length, data);
+   // console.log(data.length, data);
     io.emit("typing", data);
   });
 
   socket.on("chat_message", function (message) {
     io.emit("chat_message", "" + socket.username + ": " + message);
+    connect.then((db) => {
+    //  console.log(`${socket.username}:${message}`);
+      let chatMessage = new Chat({ message: message, sender: socket.username });
+      chatMessage.save();
+    });
   });
   app.get("/chat",(req, res, next) => {
     res.setHeader("Content-Type", "application/json");
