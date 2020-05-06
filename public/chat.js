@@ -3,7 +3,7 @@ var formEl = document.getElementById("chatForm");
 var textInputEl = document.getElementById("txt");
 var messagesEl = document.getElementById("messages-ul");
 var typingEl = document.getElementById("main-head-i")
-
+var usersNo = document.getElementById("user-txt");
 //gets previous messsages from server
 function getChats() {
   fetch("/chat")
@@ -13,7 +13,7 @@ function getChats() {
     .then((json) => {
       json.map((data) => {
         child = document.createElement("li");
-       console.log(data);
+       //console.log(data);
         child.classList.add(
           "list-group-item",
           "list-group-item-dark",
@@ -32,7 +32,6 @@ getChats();
 // sends info about typing to server
 textInputEl.addEventListener("input", function () {
   let vali = textInputEl.value.trim();
-  
   if (vali != "") {
    // console.log("after " +vali.length);
     socket.emit("typing", username);
@@ -50,8 +49,17 @@ socket.on("typing", function (data) {
   }
 });
 
+//receives info about users
+socket.on("users", function (data) {
+  console.log(data)
+    usersNo.innerText = `${data.length}`;
+});
+
+
+
 formEl.addEventListener("submit", e => {
   e.preventDefault();
+
   var sendMsg = textInputEl.value.trim();
   if (sendMsg != 0) {
     socket.emit("chat_message", textInputEl.value);

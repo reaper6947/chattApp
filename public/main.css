@@ -1,17 +1,34 @@
 #main-div {
   min-height: 100% !important;
   background-color: #242526 !important;
+  padding: 0em !important;
 }
 #main-head-li{
   background-color:#3A3B3C !important;
   color:aliceblue;
-  border-radius: .1em .1em 0.7em 0.7em !important ;
+  border-radius: .61803398875em !important ;
   list-style-type: none;
+  padding: 0 !important;
 }
 #main-head-li i{
   font-size: 0.77em !important;
+  padding: 0px !important;
+  height: fit-content;
+
+}
+#user-txt,#user-btn{
+  font-size: .87em !important;
+  
 }
 
+#user-btn{
+  border-radius: .61803398875em !important;
+  outline-width: 0em!important;
+  color: aliceblue !important;
+}
+#user-txt{
+  color:#242526 !important ;
+}
 #messages-ul li {
   color: aliceblue !important;
   background-color: #242526 !important;
@@ -52,6 +69,7 @@ button:active {
 }
 .joined-cl i {
   font-size: 0.77em !important;
+  padding: 0 !important;
 }
 
 #txt {

@@ -36,29 +36,38 @@ const chatSchema = new Schema(
 );
 let Chat = mongoose.model("theChat", chatSchema);
 //sends the previous messages to client
-
+var usersArr = Object.keys(io.sockets.sockets)
 
 io.sockets.on("connection", function (socket) {
   socket.on("username", function (username) {
     //validating username
     socket.username = name.validUser(username);
+    console.log(usersArr.length);
     io.emit("is_online", " <i>" + socket.username + " joined the chat..</i>");
   });
 
   socket.on("disconnect", function (username) {
+   // usersArr.splice(usersArr.indexOf(socket.username), 1);
+    console.log(usersArr.length);
     io.emit("is_online", " <i>" + socket.username + " left the chat..</i>");
   });
-
+//sends info about typing
   socket.on("typing", function (data) {
    // console.log(data.length, data);
     io.emit("typing", data);
+    
   });
+  
+  socket.on("users", function () {
+    // console.log(data.length, data);
+     io.emit("users", usersArr);
+   });
 
   socket.on("chat_message", function (message) {
     io.emit("chat_message", "" + socket.username + ": " + message);
     connect.then((db) => {
     //  console.log(`${socket.username}:${message}`);
-      let chatMessage = new Chat({ message: message, sender: socket.username });
+      let chatMessage = new Chat({ message: message, username: socket.username });
       chatMessage.save();
     });
   });

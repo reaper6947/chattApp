@@ -19,16 +19,21 @@
 
 
   <div class="container-fluid  mx-0 bg-light " id="main-div">
-    <li class="mx-auto sticky-top joined-cl rounded-bottom" id="main-head-li"> <i class="ml-2" id="main-head-i"></i>
+    <li class=" sticky-top joined-cl mt-1 mx-2 d-flex" id="main-head-li"> 
+      <i class="ml-2" id="main-head-i"></i>
+      <button type="button" class="btn btn-info ml-auto py-0"id="user-btn" >
+        users <span class="badge badge-primary badge-pill " id="user-txt">0</span>
+      </button>
+      
     </li>
     <ul id="messages-ul" class="list-group">
     </ul>
     <li class="list-group-item inv"></li>
     <li class="list-group-item inv py-2 my-1"></li>
-    <div class="d-flex fixed-bottom mx-3 mb-1">
+    <div class="d-flex fixed-bottom mx-2 mb-1">
       <form action="/" method="POST" id="chatForm" class="d-flex flex-fill">
-        <div class="input-group mb-1">
-          <input type="text" id="txt" autocomplete="off" autofocus="on" class="flex-fill py-2 "
+        <div class="input-group mb-0 pb-0">
+          <input type="text" id="txt" autocomplete="off" autofocus="on" class="flex-fill py-1 "
             placeholder="type your message here..." />
           <div class="input-group-append">
             <button class="btn btn-light" type="submit" id="btn-submit">
@@ -40,7 +45,7 @@
     </div>
   </div>
   <script>
-
+//<span class="badge badge-pill badge-info ml-auto">users</span> 
   </script>
   <script defer src="/chat.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

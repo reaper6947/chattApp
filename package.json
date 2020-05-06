@@ -4,7 +4,7 @@
   "description": "A simple group chat built using Node.js and Socket.io",
   "main": "index.js",
   "scripts": {
-    "start": " node index.js /public/chat.js /public/index.html",
+    "start": " node index.js /public/chat.js /public/index.html /public/main.css",
     "devStart": "nodemon index.js"
   },
   "author": "reaper6947",
