@@ -5,6 +5,7 @@ var messagesEl = document.getElementById("messages-ul");
 var typingEl = document.getElementById("main-head-i")
 var usersNo = document.getElementById("user-txt");
 //gets previous messsages from server
+
 function getChats() {
   fetch("/chat")
     .then((data) => {
@@ -48,19 +49,9 @@ socket.on("typing", function (data) {
     typingEl.innerText = "";
   }
 });
-//sends usrsinfo
-socket.emit("users", "");
-//receives info about users
-socket.on("users", function (data) {
-  console.log(data)
-    usersNo.innerText = `${data.length}`;
-});
-
-
 
 formEl.addEventListener("submit", e => {
   e.preventDefault();
-
   var sendMsg = textInputEl.value.trim();
   if (sendMsg != 0) {
     socket.emit("chat_message", textInputEl.value);
@@ -96,6 +87,13 @@ socket.on("is_online", function (username) {
   
 });
 
+//sends usrsinfo
+socket.emit("users", "");
+//receives info about users
+socket.on("users", function (data) {
+  console.log(data)
+   usersNo.innerText = `${data.length}`;
+});
 
 const validUser = function (userInfo) {
   let userId = userInfo.trim();

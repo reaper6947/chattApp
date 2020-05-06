@@ -36,31 +36,34 @@ const chatSchema = new Schema(
   }
 );
 let Chat = mongoose.model("theChat", chatSchema);
-
+var usersArr = [];
 io.sockets.on("connection", function (socket) {
   socket.on("username", function (username) {
     //validating username
     socket.username = name.validUser(username);
-   
+    usersArr.push(socket.username);
+  //  console.log(usersArr);
     io.emit("is_online", " <i>" + socket.username + " joined the chat..</i>");
+    io.emit("users",usersArr );
   });
 
   socket.on("disconnect", function (username) {
-    // usersArr.splice(usersArr.indexOf(socket.username), 1);
+    usersArr.splice(usersArr.indexOf(socket.username), 1);
+  //  console.log(usersArr);
    // console.log(Object.keys(io.sockets.sockets));
     io.emit("is_online", " <i>" + socket.username + " left the chat..</i>");
+    io.emit("users",usersArr );
   });
   //sends info about typing
   socket.on("typing", function (data) {
     // console.log(data.length, data);
     io.emit("typing", data);
   });
-
-  socket.on("users", function (data) {
-   // console.log(Object.keys(io.sockets.sockets));
-    io.emit("users", Object.keys(io.sockets.sockets));
+/*
+  socket.on("users", function () {
+    io.emit("users",usersArr );
   });
-
+*/
   //sends the previous messages to client
   socket.on("chat_message", function (message) {
     io.emit("chat_message", "" + socket.username + ": " + message);
@@ -73,6 +76,7 @@ io.sockets.on("connection", function (socket) {
       chatMessage.save();
     });
   });
+  
   app.get("/chat", (req, res, next) => {
     res.setHeader("Content-Type", "application/json");
     res.statusCode = 200;
@@ -83,6 +87,7 @@ io.sockets.on("connection", function (socket) {
       });
     });
   });
+  
 });
 const port = 3000 || process.env.PORT;
 const server = http.listen(port, function () {
