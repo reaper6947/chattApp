@@ -12,7 +12,8 @@ app.get("/", function (req, res) {
 });
 const mongoose = require("mongoose");
 mongoose.Promise = require("bluebird");
-let dbUrl ="mongodb+srv://admin:uHENT4tDAZnliV0T@chatapp-mlab-tvvyd.gcp.mongodb.net/test";
+let dbUrl =
+  "mongodb+srv://admin:uHENT4tDAZnliV0T@chatapp-mlab-tvvyd.gcp.mongodb.net/test";
 const connect = mongoose.connect(
   dbUrl,
   { useNewUrlParser: true, useUnifiedTopology: true },
@@ -35,48 +36,49 @@ const chatSchema = new Schema(
   }
 );
 let Chat = mongoose.model("theChat", chatSchema);
-//sends the previous messages to client
-var usersArr = Object.keys(io.sockets.sockets)
 
 io.sockets.on("connection", function (socket) {
   socket.on("username", function (username) {
     //validating username
     socket.username = name.validUser(username);
-    console.log(usersArr.length);
+   
     io.emit("is_online", " <i>" + socket.username + " joined the chat..</i>");
   });
 
   socket.on("disconnect", function (username) {
-   // usersArr.splice(usersArr.indexOf(socket.username), 1);
-    console.log(usersArr.length);
+    // usersArr.splice(usersArr.indexOf(socket.username), 1);
+   // console.log(Object.keys(io.sockets.sockets));
     io.emit("is_online", " <i>" + socket.username + " left the chat..</i>");
   });
-//sends info about typing
+  //sends info about typing
   socket.on("typing", function (data) {
-   // console.log(data.length, data);
-    io.emit("typing", data);
-    
-  });
-  
-  socket.on("users", function () {
     // console.log(data.length, data);
-     io.emit("users", usersArr);
-   });
+    io.emit("typing", data);
+  });
 
+  socket.on("users", function (data) {
+   // console.log(Object.keys(io.sockets.sockets));
+    io.emit("users", Object.keys(io.sockets.sockets));
+  });
+
+  //sends the previous messages to client
   socket.on("chat_message", function (message) {
     io.emit("chat_message", "" + socket.username + ": " + message);
     connect.then((db) => {
-    //  console.log(`${socket.username}:${message}`);
-      let chatMessage = new Chat({ message: message, username: socket.username });
+      //  console.log(`${socket.username}:${message}`);
+      let chatMessage = new Chat({
+        message: message,
+        username: socket.username,
+      });
       chatMessage.save();
     });
   });
-  app.get("/chat",(req, res, next) => {
+  app.get("/chat", (req, res, next) => {
     res.setHeader("Content-Type", "application/json");
     res.statusCode = 200;
-    connect.then(db => {
-        let data = Chat.find({});
-      Chat.find({}).then(chat => {
+    connect.then((db) => {
+      let data = Chat.find({});
+      Chat.find({}).then((chat) => {
         res.json(chat);
       });
     });

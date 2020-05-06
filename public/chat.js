@@ -48,7 +48,8 @@ socket.on("typing", function (data) {
     typingEl.innerText = "";
   }
 });
-
+//sends usrsinfo
+socket.emit("users", "");
 //receives info about users
 socket.on("users", function (data) {
   console.log(data)
