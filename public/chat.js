@@ -65,6 +65,7 @@ formEl.addEventListener("submit", (e) => {
     socket.emit("chat_message", textInputEl.value);
     socket.emit("typing", "");
     textInputEl.value = "";
+    submitBtn.classList.add("inv");
     return false;
   }
 });
