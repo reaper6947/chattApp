@@ -62,26 +62,24 @@ io.sockets.on("connection", function (socket) {
     usersArr.push(socket.username);
   //  console.log(usersArr);
     io.emit("is_online", " <i>" + socket.username + " joined the chat..</i>");
-    io.emit("users",usersArr );
+    io.emit("users", usersArr);
+  //  console.log(socket.id + " joined");
   });
 
   socket.on("disconnect", function (username) {
     usersArr.splice(usersArr.indexOf(socket.username), 1);
-  //  console.log(usersArr);
+
    // console.log(Object.keys(io.sockets.sockets));
     io.emit("is_online", " <i>" + socket.username + " left the chat..</i>");
-    io.emit("users",usersArr );
+    io.emit("users", usersArr);
+   // console.log(socket.id + " left");
   });
   //sends info about typing
   socket.on("typing", function (data) {
     // console.log(data.length, data);
     socket.broadcast.emit("typing", data);
   });
-/*
-  socket.on("users", function () {
-    io.emit("users",usersArr );
-  });
-*/
+
   //sends the previous messages to client
   socket.on("chat_message", function (message) {
     io.emit("chat_message", "" + socket.username + ": " + message);
