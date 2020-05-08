@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1></h1>
+    <script>
+        const validUser = function (userInfo) {
+  let userId = userInfo.trim();
+  if (
+    userId === "" ||
+    userId === null ||
+    userId === undefined ||
+    userId === "undefined" ||
+    userId.length > 10
+  ) {
+    let mat = Math.floor(Math.random() * 10) + 1;
+    let str = Math.random().toString(36).substr(2, 3);
+    return `user-${mat}${str}`;
+  } else {
+    return userInfo;
+  }
+};
+        let usr = prompt("enter new username");
+        let username = validUser(usr);
+        localStorage.setItem("user-name", username);
+        let h1 = document.querySelector("h1");
+h1.innerHTML = "your new username is " + username + ". now go to home page." ;
+    </script>
+</body>
+</html>

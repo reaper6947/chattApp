@@ -60,19 +60,19 @@ io.sockets.on("connection", function (socket) {
     //validating username
     socket.username = name.validUser(username);
     usersArr.push(socket.username);
-  //  console.log(usersArr);
+    //  console.log(usersArr);
     io.emit("is_online", " <i>" + socket.username + " joined the chat..</i>");
     io.emit("users", usersArr);
-  //  console.log(socket.id + " joined");
+    //  console.log(socket.id + " joined");
   });
 
   socket.on("disconnect", function (username) {
     usersArr.splice(usersArr.indexOf(socket.username), 1);
 
-   // console.log(Object.keys(io.sockets.sockets));
+    // console.log(Object.keys(io.sockets.sockets));
     io.emit("is_online", " <i>" + socket.username + " left the chat..</i>");
     io.emit("users", usersArr);
-   // console.log(socket.id + " left");
+    // console.log(socket.id + " left");
   });
   //sends info about typing
   socket.on("typing", function (data) {
@@ -92,18 +92,21 @@ io.sockets.on("connection", function (socket) {
       chatMessage.save();
     });
   });
-  
+
   app.get("/chat", (req, res, next) => {
     res.setHeader("Content-Type", "application/json");
     res.statusCode = 200;
     connect.then((db) => {
-     // let data = Chat.find({});
+      // let data = Chat.find({});
       Chat.find({}).then((chat) => {
         res.json(chat);
       });
     });
   });
 
+  app.get("/set/user", function (req, res) {
+    res.status(200).sendFile(path.join(__dirname, "public", "user.html"));
+  });
 });
 const port = 3000 || process.env.PORT;
 const server = http.listen(port, function () {
