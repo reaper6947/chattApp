@@ -3,13 +3,31 @@ const app = express();
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
 var path = require("path");
-
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
 const name = require("./username");
+//this is for auto https upgrades for production
+/*
+function checkHttps(req, res, next){
+  // protocol check, if http, redirect to https
+  
+  if(req.get('X-Forwarded-Proto').indexOf("https")!=-1){
+    console.log("https, yo")
+    return next()
+  } else {
+    console.log("just http")
+    res.redirect('https://' + req.hostname + req.url);
+  }
+}
+app.all('*', checkHttps)
+*/
+
 // Specify a directory to serve static files
 app.use(express.static("public"));
 app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname + "/public/index.html"));
+  res.sendFile(path.join(__dirname + "/public"));
 });
+
 const mongoose = require("mongoose");
 mongoose.Promise = require("bluebird");
 let dbUrl =
@@ -57,7 +75,7 @@ io.sockets.on("connection", function (socket) {
   //sends info about typing
   socket.on("typing", function (data) {
     // console.log(data.length, data);
-    io.emit("typing", data);
+    socket.broadcast.emit("typing", data);
   });
 /*
   socket.on("users", function () {
@@ -81,13 +99,13 @@ io.sockets.on("connection", function (socket) {
     res.setHeader("Content-Type", "application/json");
     res.statusCode = 200;
     connect.then((db) => {
-      let data = Chat.find({});
+     // let data = Chat.find({});
       Chat.find({}).then((chat) => {
         res.json(chat);
       });
     });
   });
-  
+
 });
 const port = 3000 || process.env.PORT;
 const server = http.listen(port, function () {
