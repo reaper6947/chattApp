@@ -5,6 +5,7 @@ var textInputEl = document.getElementById("txt");
 var messagesEl = document.getElementById("messages-ul");
 var typingEl = document.getElementById("main-head-i");
 var usersNo = document.getElementById("user-txt");
+var submitBtn = document.getElementById("btn-submit");
 //gets previous messsages from server
 
 function getChats() {
@@ -34,6 +35,12 @@ getChats();
 // sends info about typing to server
 textInputEl.addEventListener("input", function () {
   let vali = textInputEl.value.trim();
+  if (vali !== "") {
+    submitBtn.classList.remove("inv");
+  } else {
+    submitBtn.classList.add("inv");
+  }
+
   if (vali != "") {
     // console.log("after " +vali.length);
     socket.emit("typing", username);

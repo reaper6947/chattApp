@@ -53,8 +53,7 @@
   border-radius: 2em 2em 2em 2em;
   padding: 0.375rem 0.75rem !important;
   text-align: center;
-
-  text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
+  
 }
 .button:hover {
   background-color: #3e8e41;
