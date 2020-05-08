@@ -3,6 +3,7 @@ const app = express();
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
 var path = require("path");
+const dotenv = require("dotenv").config();
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 const name = require("./username");
@@ -30,8 +31,7 @@ app.get("/", function (req, res) {
 
 const mongoose = require("mongoose");
 mongoose.Promise = require("bluebird");
-let dbUrl =
-  "mongodb+srv://admin:uHENT4tDAZnliV0T@chatapp-mlab-tvvyd.gcp.mongodb.net/test";
+let dbUrl =process.env.DBURL;
 const connect = mongoose.connect(
   dbUrl,
   { useNewUrlParser: true, useUnifiedTopology: true },
