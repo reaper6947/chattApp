@@ -122,7 +122,7 @@ const validUser = function (userInfo) {
 };
 // ask username
 
-if (typeof localStorage.getItem("user-name") !== "undefined") {
+if (typeof localStorage.getItem("user-name") !== "undefined" && localStorage.getItem("user-name") !== null) {
   var username = localStorage.getItem("user-name");
   textInputEl.setAttribute("placeholder", `type as ${username}`);
   socket.emit("username", username);
