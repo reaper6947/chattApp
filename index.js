@@ -3,10 +3,16 @@ const app = express();
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
 var path = require("path");
-const dotenv = require("dotenv").config();
+//const dotenv = require("dotenv").config();
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 const name = require("./username");
+//connecting the mongo database 
+const connect = require("./dbConnect");
+//const connect = dbConnect(process.env.DBURL);
+//new schema instance
+const Chat = require("./model/chatschema");
+
 //this is for auto https upgrades for production
 /*
 function checkHttps(req, res, next){
@@ -29,31 +35,6 @@ app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname + "/public"));
 });
 
-const mongoose = require("mongoose");
-mongoose.Promise = require("bluebird");
-let dbUrl =process.env.DBURL;
-const connect = mongoose.connect(
-  dbUrl,
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  (err) => {
-    console.log("mongodb connected", err);
-  }
-);
-const Schema = mongoose.Schema;
-const chatSchema = new Schema(
-  {
-    message: {
-      type: String,
-    },
-    username: {
-      type: String,
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
-let Chat = mongoose.model("theChat", chatSchema);
 var usersArr = [];
 io.sockets.on("connection", function (socket) {
   socket.on("username", function (username) {
@@ -93,11 +74,11 @@ io.sockets.on("connection", function (socket) {
     });
   });
 
+
   app.get("/chat", (req, res, next) => {
     res.setHeader("Content-Type", "application/json");
     res.statusCode = 200;
     connect.then((db) => {
-      // let data = Chat.find({});
       Chat.find({}).then((chat) => {
         res.json(chat);
       });

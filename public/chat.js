@@ -1,5 +1,4 @@
 var socket = io.connect("localhost:3000");
-
 var formEl = document.getElementById("chatForm");
 var textInputEl = document.getElementById("txt");
 var messagesEl = document.getElementById("messages-ul");
