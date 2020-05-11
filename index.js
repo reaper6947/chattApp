@@ -14,20 +14,10 @@ const connect = require("./dbConnect");
 const Chat = require("./model/chatschema");
 
 //this is for auto https upgrades for production
-/*
-function checkHttps(req, res, next){
-  // protocol check, if http, redirect to https
-  
-  if(req.get('X-Forwarded-Proto').indexOf("https")!=-1){
-    console.log("https, yo")
-    return next()
-  } else {
-    console.log("just http")
-    res.redirect('https://' + req.hostname + req.url);
-  }
-}
-app.all('*', checkHttps)
-*/
+
+const checkHttps = require("./route/httpsUpgrade")
+//app.all('*', checkHttps)
+
 
 // Specify a directory to serve static files
 app.use(express.static("public"));
