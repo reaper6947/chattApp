@@ -5,6 +5,7 @@ var messagesEl = document.getElementById("messages-ul");
 var typingEl = document.getElementById("main-head-i");
 var usersNo = document.getElementById("user-txt");
 var submitBtn = document.getElementById("btn-submit");
+var toastDiv = document.getElementById("joinedToast");
 //gets previous messsages from server
 
 function getChats() {
@@ -89,17 +90,17 @@ socket.on("chat_message", function (msg) {
 
 // append text if someone is online
 socket.on("is_online", function (username) {
-  let child = document.createElement("li");
-  child.classList.add("mx-auto", "joined-cl");
-  child.innerHTML = username;
-  messagesEl.appendChild(child);
+  //messagesEl.appendChild(child);
+ // console.log(child);
+ toastDiv.innerHTML = `${username}`;
+  $('.toast').toast('show');
 });
 
 //sends usrsinfo
 socket.emit("users", "");
 //receives info about users
 socket.on("users", function (data) {
-  console.log(data);
+ // console.log(data);
   usersNo.innerText = `${data.length}`;
 });
 

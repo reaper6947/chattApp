@@ -14,10 +14,8 @@ const connect = require("./dbConnect");
 const Chat = require("./model/chatschema");
 
 //this is for auto https upgrades for production
-
 const checkHttps = require("./route/httpsUpgrade")
 //app.all('*', checkHttps)
-
 
 // Specify a directory to serve static files
 app.use(express.static("public"));
@@ -31,23 +29,18 @@ io.sockets.on("connection", function (socket) {
     //validating username
     socket.username = name.validUser(username);
     usersArr.push(socket.username);
-    //  console.log(usersArr);
-    io.emit("is_online", " <i>" + socket.username + " joined the chat..</i>");
+    io.emit("is_online", " <i class='mx-auto'>" + socket.username + " has joined the chat..</i>");
     io.emit("users", usersArr);
-    //  console.log(socket.id + " joined");
   });
 
   socket.on("disconnect", function (username) {
     usersArr.splice(usersArr.indexOf(socket.username), 1);
-
-    // console.log(Object.keys(io.sockets.sockets));
-    io.emit("is_online", " <i>" + socket.username + " left the chat..</i>");
+    io.emit("is_online", " <i class='mx-auto'>" + socket.username + " has left the chat..</i>");
     io.emit("users", usersArr);
-    // console.log(socket.id + " left");
   });
+
   //sends info about typing
   socket.on("typing", function (data) {
-    // console.log(data.length, data);
     socket.broadcast.emit("typing", data);
   });
 
@@ -55,7 +48,6 @@ io.sockets.on("connection", function (socket) {
   socket.on("chat_message", function (message) {
     io.emit("chat_message", "" + socket.username + ": " + message);
     connect.then((db) => {
-      //  console.log(`${socket.username}:${message}`);
       let chatMessage = new Chat({
         message: message,
         username: socket.username,
@@ -63,7 +55,6 @@ io.sockets.on("connection", function (socket) {
       chatMessage.save();
     });
   });
-
 
   app.get("/chat", (req, res, next) => {
     res.setHeader("Content-Type", "application/json");
