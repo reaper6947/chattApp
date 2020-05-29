@@ -56,12 +56,17 @@ socket.on("typing", function (data) {
 formEl.addEventListener("submit", (e) => {
   e.preventDefault();
   var sendMsg = textInputEl.value.trim();
-  if (sendMsg != 0) {
+  if (sendMsg != 0 && sendMsg.length < 100) {
     socket.emit("chat_message", textInputEl.value);
     socket.emit("typing", "");
     textInputEl.value = "";
     submitBtn.classList.add("inv");
+    console.log(typeof sendMsg);
     return false;
+  }
+  else {
+    alert("error: text too big");
+    textInputEl.value = "";
   }
 });
 
