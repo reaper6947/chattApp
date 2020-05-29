@@ -44,7 +44,7 @@ io.sockets.on("connection", function (socket) {
     socket.broadcast.emit("typing", data);
   });
 
-  //sends the previous messages to client
+  //sends messages and saves them
   socket.on("chat_message", function (message) {
     io.emit("chat_message", "" + socket.username + ": " + message);
     connect.then((db) => {
@@ -55,8 +55,8 @@ io.sockets.on("connection", function (socket) {
       chatMessage.save();
     });
   });
-
-  app.get("/chat", (req, res, next) => {
+//sends the previous messages to client
+  app.get("/chat", (req, res) => {
     res.setHeader("Content-Type", "application/json");
     res.statusCode = 200;
     connect.then((db) => {
@@ -64,11 +64,13 @@ io.sockets.on("connection", function (socket) {
         res.json(chat);
       });
     });
+    
   });
 
   app.get("/set/user", function (req, res) {
     res.status(200).sendFile(path.join(__dirname, "public", "user.html"));
   });
+
 });
 const port = 3000 || process.env.PORT;
 const server = http.listen(port, function () {

@@ -37,14 +37,9 @@ textInputEl.addEventListener("input", function () {
   let vali = textInputEl.value.trim();
   if (vali !== "") {
     submitBtn.classList.remove("inv");
-  } else {
-    submitBtn.classList.add("inv");
-  }
-
-  if (vali != "") {
-    // console.log("after " +vali.length);
     socket.emit("typing", username);
   } else {
+    submitBtn.classList.add("inv");
     socket.emit("typing", "");
   }
 });
@@ -90,8 +85,6 @@ socket.on("chat_message", function (msg) {
 
 // append text if someone is online
 socket.on("is_online", function (username) {
-  //messagesEl.appendChild(child);
- // console.log(child);
  toastDiv.innerHTML = `${username}`;
   $('.toast').toast('show');
 });
@@ -121,7 +114,6 @@ const validUser = function (userInfo) {
   }
 };
 // ask username
-
 if (typeof localStorage.getItem("user-name") !== "undefined" && localStorage.getItem("user-name") !== null) {
   var username = localStorage.getItem("user-name");
   textInputEl.setAttribute("placeholder", `type as ${username}`);
